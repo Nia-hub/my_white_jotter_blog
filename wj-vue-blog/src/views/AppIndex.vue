@@ -1,6 +1,6 @@
 <template>
     <div>
-        登录成功
+        首页
     </div>
 </template>
 

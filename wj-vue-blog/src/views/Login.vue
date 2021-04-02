@@ -41,7 +41,10 @@ export default {
     },
     methods: {
         login() {
-            this.axios.post('/login')
+            this.axios.post('/login', {
+                userName: this.loginForm.userName,
+                password: this.loginForm.password
+            })
         },
     },
 };

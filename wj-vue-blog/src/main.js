@@ -7,7 +7,7 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-//设置反向代理，前端发送的请求默认发送到http://localhost:8443/api
+//设置反向代理，前端发送的请求默认发送到http://localhost:9999/api
 axios.defaults.baseURL = 'http://localhost:9999/api'
 //全局注册，之后可通过this.$axios在其他组件发送请求
 Vue.prototype.$axios = axios
