@@ -131,3 +131,42 @@ git config --global user.email "1845067261@qq.com"
 
 
 https://blog.csdn.net/baiqiangdoudou/article/details/85248782
+
+
+
+#### 4.拉取github中更新的代码
+
+第一种
+
+```ma
+git pull 获取最新代码到本地，并自动合并到当前分支
+
+    // 查询当前远程的版本
+    git remote -v
+     
+    // 直接拉取合并最新代码
+    
+这种方式自动合并最新代码，无法提前处理冲突代码。    	
+    git pull origin maste
+```
+
+第二种
+
+```ma
+git fetch + merge: 获取最新代码到本地，然后手动合并分支
+
+
+git remote -v
+ 
+// 获取最新代码到本地(本地当前分支为[master]，获取的远端的分支为[origin/master])
+git fetch origin master 
+ 
+// 查看版本差异
+git log -p master..origin/master
+ 
+// 合并最新代码到本地分支
+git merge origin/master
+
+原文链接：https://blog.csdn.net/gh254172840/article/details/106166208
+```
+

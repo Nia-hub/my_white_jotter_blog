@@ -1,20 +1,19 @@
 <template>
-    <div class="login-wrap">
-        <div class="wj-title">white jotter bolg登录</div>
-        <div class="wj-login">
-            <el-form :model="loginForm" :rules="rules" ref="ruleForm">
-                <el-form-item prop="username">
-                    <el-input v-model="loginForm.userName" placeholder="用户名"></el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                    <el-input type="password" v-model="loginForm.password" placeholder="密码"></el-input>
-                </el-form-item>
-                <div class="login-btn">
-                    <el-button type="primary" @click="login">登录</el-button>
-                </div>
-            </el-form>
-        </div>
-    </div>
+
+    <body class="login-wrap">
+        <el-form :model="loginForm"  :rules="rules" class="login-container" label-position="left">
+            <h3 class="login-title">系统登录</h3>
+            <el-form-item prop="userName">
+                <el-input type="text" v-model="loginForm.userName" placeholder="请输入账号"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+                <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+            </el-form-item>
+            <el-form-item style="width: 100%">
+                <el-button type="primary" style="width:100%;" @click="login">登录</el-button>
+            </el-form-item>
+        </el-form>
+    </body>
 </template>
 
 <script>
@@ -29,64 +28,62 @@ export default {
                 userName: [
                     {
                         required: true,
-                        message: "请输入用户名",
+                        message: "用户名不能为空",
                         trigger: "blur",
                     },
                 ],
-                passord: [
-                    { required: true, message: "请输入密码", trigger: "blur" },
+                password: [
+                    {
+                        required: true,
+                        message: "密码不能为空",
+                        trigger: "blur",
+                    },
                 ],
             },
         };
     },
     methods: {
         login() {
-            this.axios.post('/login', {
+            this.axios.post("/login", {
                 userName: this.loginForm.userName,
-                password: this.loginForm.password
+                password: this.loginForm.password,
+            }).then(successRes => {
+                if(successRes.data.code === 200){
+                    this.$router.replace({path: '/index'})
+                }
+            }).catch(failRes => {
+                
             })
         },
     },
 };
 </script>
 
-<style scoped>
+<style>
 .login-wrap {
-    position: absolute;
-    background: url("../assets/img/eva1.jpg");
-    background-attachment: fixed;
+    background: url("../assets/img/eva1.jpg") no-repeat;
     background-position: center;
-    background-size: cover;
-    width: 100%;
     height: 100%;
-}
-.wj-title {
-    position: absolute;
-    top: 50%;
     width: 100%;
-    margin-top: -230px;
-    text-align: center;
-    font-size: 30px;
-    font-weight: 600;
-    color: #fff;
+    background-size: cover;
+    position: fixed;
 }
-.wj-login {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 300px;
-    height: 160px;
-    margin-left: -190px;
-    margin-top: -150px;
-    padding: 40px;
-    border-radius: 5px;
+body {
+    margin: 0;
+}
+.login-container {
+    border-radius: 15px;
+    background-clip: padding-box;
+    margin: 200px auto;
+    width: 350px;
+    padding: 35px 35px 15px 35px;
     background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
 }
-.login-btn {
+.login_title {
+    margin: 0px auto 40px auto;
     text-align: center;
-}
-.login-btn button {
-    width: 100%;
-    height: 36px;
+    color: #505458;
 }
 </style>
