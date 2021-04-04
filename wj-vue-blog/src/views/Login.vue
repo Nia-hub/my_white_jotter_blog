@@ -1,7 +1,7 @@
 <template>
 
     <body class="login-wrap">
-        <el-form :model="loginForm"  :rules="rules" class="login-container" label-position="left">
+        <el-form :model="loginForm" :rules="rules" class="login-container" label-position="left">
             <h3 class="login-title">系统登录</h3>
             <el-form-item prop="userName">
                 <el-input type="text" v-model="loginForm.userName" placeholder="请输入账号"></el-input>
@@ -10,7 +10,7 @@
                 <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
             </el-form-item>
             <el-form-item style="width: 100%">
-                <el-button type="primary" style="width:100%;" @click="login">登录</el-button>
+                <el-button type="primary" style="width:100%;border: none;" @click="login">登录</el-button>
             </el-form-item>
         </el-form>
     </body>
@@ -44,16 +44,28 @@ export default {
     },
     methods: {
         login() {
-            this.axios.post("/login", {
-                userName: this.loginForm.userName,
-                password: this.loginForm.password,
-            }).then(successRes => {
-                if(successRes.data.code === 200){
-                    this.$router.replace({path: '/index'})
-                }
-            }).catch(failRes => {
-                
-            })
+            console.log(this.$store.state);
+            this.$axios
+                .post("/login", {
+                    userName: this.loginForm.userName,
+                    password: this.loginForm.password,
+                })
+                .then((successResponse) => {
+                    if (successResponse.data.code === 200) {
+                        // var data = this.loginForm
+                        this.$store.commit("login", this.loginForm);
+                        //route相当于当前正在跳转的路由对象。。可以从里面获取name,path,params,query等
+                        var path = this.$route.query.redirect;
+                        console.log(path);
+                        this.$router.replace({
+                            path:
+                                path === "/" || path === undefined
+                                    ? "/index"
+                                    : path,
+                        });
+                    }
+                })
+                .catch((failResponse) => {});
         },
     },
 };

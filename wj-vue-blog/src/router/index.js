@@ -1,27 +1,40 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../components/Home.vue'
 import Login from '../views/Login.vue'
 import AppIndex from '../views/AppIndex.vue'
+import LibraryIndex from '../components/library/LibraryIndex.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{
-
-        path: '/',
+        path: '/home',
         name: 'Home',
-        component: Home
+        component: Home,
+        //Home页面不需要被访问
+        redirect: '/index',
+        children: [{
+            path: '/index',
+            name: 'AppIndex',
+            component: AppIndex,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/library',
+            name: 'Library',
+            component: LibraryIndex,
+            meta: {
+                requireAuth: true
+            }
+        }]
     },
     {
         path: '/login',
         name: 'Login',
         component: Login
     },
-    {
-         path: '/index',
-         name: 'AppIndex',
-         component: AppIndex   
-    },
+
     {
         path: '/about',
         name: 'About',

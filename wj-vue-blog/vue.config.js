@@ -11,7 +11,7 @@ module.exports = {
         hotOnly: false, //是否开启热更新
         proxy: {
             '/api': {
-                target: 'http://localhost:9999',
+                target: 'http://localhost:8888',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''

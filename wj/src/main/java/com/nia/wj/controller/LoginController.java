@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.tags.HtmlEscapeTag;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -31,7 +32,7 @@ public class LoginController {
     @CrossOrigin(origins = "*",maxAge = 3600)
     @PostMapping(value = "/api/login")
     @ResponseBody
-    public RetObj login(@RequestBody User loginUser){
+    public RetObj login(@RequestBody User loginUser, HttpSession session){
 
         // 对 html 标签进行转义，防止 XSS 攻击
         String userName = loginUser.getUserName();
@@ -39,9 +40,9 @@ public class LoginController {
 
         User user = userService.get(userName, loginUser.getPassword());
         if (user == null) {
-            System.out.println("账号或密码错误");
             return new RetObj(400);
         }else {
+            session.setAttribute("user", loginUser);
             return new RetObj(200);
         }
 
