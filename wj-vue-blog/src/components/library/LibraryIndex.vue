@@ -5,7 +5,7 @@
             <side-menu></side-menu>
         </el-aside>
         <el-main>
-            <books></books>
+            <books class="books-area"></books>
         </el-main>
     </el-container>
 </template>
@@ -23,4 +23,11 @@ export default {
 </script>
 
 <style scoped>
+
+  .books-area {
+    width: 990px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
 </style>
