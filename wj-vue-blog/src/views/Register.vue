@@ -1,5 +1,4 @@
 <template>
-
     <body id="paper">
         <el-form :model="loginForm" :rules="rules" class="login-container" label-position="left" label-width="0px"
             v-loading="loading">
@@ -88,7 +87,9 @@ export default {
                         });
                     }
                 })
-                .catch((failResponse) => {});
+                .catch((failResponse) => {
+                    console.log(failResponse.data.message);
+                });
         },
     },
 };

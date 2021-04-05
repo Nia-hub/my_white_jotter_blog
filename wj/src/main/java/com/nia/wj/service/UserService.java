@@ -22,11 +22,11 @@ public class UserService {
     }
 
     public User getByLoinName(String username) {
-        return userDao.findByLoinName(username);
+        return userDao.findByLoginName(username);
     }
 
     public User get(String username, String password){
-        return userDao.findByLoinNameAndPassword(username, password);
+        return userDao.findByLoginNameAndPassword(username, password);
     }
 
     public void add(User user) {

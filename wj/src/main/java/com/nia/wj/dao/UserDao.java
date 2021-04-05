@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserDao extends JpaRepository<User, Integer> {
 
-    User findByLoinName(String loinName);
+    User findByLoginName(String loginName);
 
-    User findByLoinNameAndPassword(String LoinName, String password);
+    User findByLoginNameAndPassword(String loginName, String password);
 }
