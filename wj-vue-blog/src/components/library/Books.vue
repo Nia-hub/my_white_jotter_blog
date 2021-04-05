@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-row style="height: 580px;">
-            <!--<search-bar></search-bar>-->
+        <el-row style="height: 90%;">
+            <search-bar @onSearch="searchResult" ref="searchBar"></search-bar>
             <el-tooltip effect="dark" placement="right" v-for="item in books" :key="item.id">
                 <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.title}}</p>
                 <p slot="content" style="font-size: 13px;margin-bottom: 6px">
@@ -13,41 +13,103 @@
                 <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px"
                     class="book" bodyStyle="padding:10px" shadow="hover">
                     <div class="cover">
-                        <img :src="item.cover" alt="封面">
+                        <img :src="item.cover" @click="editBook(item)" alt="封面">
                     </div>
                     <div class="info">
                         <div class="title">
                             <a href="">{{item.title}}</a>
+                            <i class="el-icon-delete" @click="deleteBook(item.id)"></i>
                         </div>
                     </div>
                     <div class="author">{{item.author}}</div>
                 </el-card>
             </el-tooltip>
+            <edit-form @onSubmit="loadBooks()" ref="edit"></edit-form>
         </el-row>
-        <el-row>
-            <el-pagination :current-page="1" :page-size="10" :total="20">
+        <el-row style="height: 10%;">
+            <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pagesize"
+                :total="books.length">
             </el-pagination>
         </el-row>
     </div>
 </template>
 
 <script>
+import EditForm from "./EditForm";
+import SearchBar from "./SearchBar";
 export default {
     name: "Books",
+    components: {
+        SearchBar,
+        EditForm,
+    },
     data() {
         return {
-            books: [
-                {
-                    cover: "https://i.loli.net/2019/04/10/5cada7e73d601.jpg",
-                    title: "三体",
-                    author: "刘慈欣",
-                    date: "2019-05-05",
-                    press: "重庆出版社",
-                    abs:
-                        "文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……",
-                },
-            ],
+            books: [],
+            currentPage: 1,
+            pagesize: 17,
         };
+    },
+    mounted: function () {
+        this.loadBooks();
+    },
+    methods: {
+        loadBooks() {
+            var _this = this;
+            this.$axios.get("/books").then((resp) => {
+                if (resp && resp.status === 200) {
+                    _this.books = resp.data;
+                }
+            });
+        },
+        handleCurrentChange: function (currentPage) {
+            this.currentPage = currentPage;
+            console.log(this.currentPage);
+        },
+        searchResult() {
+            var _this = this;
+            this.$axios
+                .get("/search?keywords=" + this.$refs.searchBar.keywords, {})
+                .then((resp) => {
+                    if (resp && resp.status === 200) {
+                        _this.books = resp.data;
+                    }
+                });
+        },
+        deleteBook(id) {
+            this.$confirm("此操作将永久删除该书籍, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            })
+                .then(() => {
+                    this.$axios.post("/delete", { id: id }).then((resp) => {
+                        if (resp && resp.status === 200) {
+                            this.loadBooks();
+                        }
+                    });
+                })
+                .catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消删除",
+                    });
+                });
+            // alert(id)
+        },
+        editBook(item) {
+            this.$refs.edit.dialogFormVisible = true;
+            this.$refs.edit.form = {
+                id: item.id,
+                categoryId: item.categoryId,
+                cover: item.cover,
+                title: item.title,
+                author: item.author,
+                date: item.date,
+                press: item.press,
+                abs: item.abs,
+            };
+        },
     },
 };
 </script>

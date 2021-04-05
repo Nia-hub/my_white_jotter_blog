@@ -56,4 +56,13 @@ public class BookService {
     public List<Book> listByCategoryId(int categoryId) {
         return bookDao.findAllByCategoryId(categoryId);
     }
+
+    /**
+     * 根据关键词搜索书籍
+     * @param keywords
+     * @return
+     */
+    public List<Book> Search(String keywords) {
+        return bookDao.findAllByTitleLikeOrAuthorLike('%' + keywords + '%', '%' + keywords + '%');
+    }
 }

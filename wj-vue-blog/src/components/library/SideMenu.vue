@@ -34,20 +34,27 @@
 <script>
 export default {
     name: "SideMenu",
+    data() {
+        return {
+            categoryId: "",
+        };
+    },
     methods: {
-        handleSelect(){
-            
-        }
-    }
+        handleSelect(key, keyPath) {
+            this.categoryId = key;
+            //子组件向父组件通讯，父组件的indexSelect函数执行
+            this.$emit("indexSelect");
+        },
+    },
 };
 </script>
 
 <style scoped>
-.categories {
+/* .categories {
     position: fixed;
     margin-left: 50%;
     left: -600px;
     top: 100px;
     width: 150px;
-}
+} */
 </style>

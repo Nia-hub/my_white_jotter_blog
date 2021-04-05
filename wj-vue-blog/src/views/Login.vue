@@ -3,8 +3,8 @@
     <body class="login-wrap">
         <el-form :model="loginForm" :rules="rules" class="login-container" label-position="left">
             <h3 class="login-title">系统登录</h3>
-            <el-form-item prop="userName">
-                <el-input type="text" v-model="loginForm.userName" placeholder="请输入账号"></el-input>
+            <el-form-item prop="loginName">
+                <el-input type="text" v-model="loginForm.loginName" placeholder="请输入账号"></el-input>
             </el-form-item>
             <el-form-item prop="password">
                 <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
@@ -21,11 +21,11 @@ export default {
     data: function () {
         return {
             loginForm: {
-                userName: "admin",
+                loginName: "admin",
                 password: "123",
             },
             rules: {
-                userName: [
+                loginName: [
                     {
                         required: true,
                         message: "用户名不能为空",
@@ -47,7 +47,7 @@ export default {
             console.log(this.$store.state);
             this.$axios
                 .post("/login", {
-                    userName: this.loginForm.userName,
+                    userName: this.loginForm.loginName,
                     password: this.loginForm.password,
                 })
                 .then((successResponse) => {

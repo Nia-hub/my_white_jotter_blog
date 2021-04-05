@@ -16,17 +16,17 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    public boolean isExist(String username) {
-        User user = getByName(username);
+    public boolean isExist(String loginName) {
+        User user = getByLoinName(loginName);
         return null!=user;
     }
 
-    public User getByName(String username) {
-        return userDao.findByUserName(username);
+    public User getByLoinName(String username) {
+        return userDao.findByLoinName(username);
     }
 
     public User get(String username, String password){
-        return userDao.findByUserNameAndPassword(username, password);
+        return userDao.findByLoinNameAndPassword(username, password);
     }
 
     public void add(User user) {

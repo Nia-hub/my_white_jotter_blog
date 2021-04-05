@@ -8,6 +8,15 @@ import LibraryIndex from '../components/library/LibraryIndex.vue'
 Vue.use(VueRouter)
 
 const routes = [{
+        path: '/',
+        name: 'index',
+        redirect: '/index',
+        component: AppIndex,
+        meta: {
+            requireAuth: true
+        }
+    },
+    {
         path: '/home',
         name: 'Home',
         component: Home,
