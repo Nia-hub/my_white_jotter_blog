@@ -11,6 +11,8 @@
             </el-form-item>
             <el-form-item style="width: 100%">
                 <el-button type="primary" style="width:100%;border: none;" @click="login">登录</el-button>
+                <!--to后接组件名-->
+                <router-link to="register"><el-button type="primary" style="width: 40%;background: #505458;border: none">注册</el-button></router-link>
             </el-form-item>
         </el-form>
     </body>
@@ -47,12 +49,12 @@ export default {
             console.log(this.$store.state);
             this.$axios
                 .post("/login", {
-                    userName: this.loginForm.loginName,
+                    loginName: this.loginForm.loginName,
                     password: this.loginForm.password,
                 })
                 .then((successResponse) => {
                     if (successResponse.data.code === 200) {
-                        // var data = this.loginForm
+                        //将loginForm中的值对应赋值到store中的user上，这样localStorage中就有了对应的loginName信息
                         this.$store.commit("login", this.loginForm);
                         //route相当于当前正在跳转的路由对象。。可以从里面获取name,path,params,query等
                         var path = this.$route.query.redirect;
@@ -65,7 +67,9 @@ export default {
                         });
                     }
                 })
-                .catch((failResponse) => {});
+                .catch((failResponse) => {
+                    console.log(failResponse.data.message);
+                });
         },
     },
 };

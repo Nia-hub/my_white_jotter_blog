@@ -32,7 +32,10 @@ public class MyWebConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getLoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/index.html");
+        registry.addInterceptor(getLoginInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/api/login")
+                .excludePathPatterns("/api/logout")
+                .excludePathPatterns("/index.html");
     }
 
     /**
@@ -43,9 +46,10 @@ public class MyWebConfigurer implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         //所有请求都允许跨域
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("http://localhost:9999")//允许访问的域
                 .allowedMethods("*")
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .allowCredentials(true);//cookie允许跨域使用
     }
 
     @Override

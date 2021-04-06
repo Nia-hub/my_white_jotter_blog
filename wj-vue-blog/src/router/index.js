@@ -7,7 +7,8 @@ import LibraryIndex from '../components/library/LibraryIndex.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+    {
         path: '/',
         name: 'index',
         redirect: '/index',
@@ -43,7 +44,11 @@ const routes = [{
         name: 'Login',
         component: Login
     },
-
+    {
+        path: '/register',
+        name: 'Register',
+        component: () => import('../views/Register')
+    },
     {
         path: '/about',
         name: 'About',

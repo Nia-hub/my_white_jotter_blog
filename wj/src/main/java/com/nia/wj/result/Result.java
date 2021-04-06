@@ -1,4 +1,4 @@
-package com.nia.wj.pojo;
+package com.nia.wj.result;
 
 
 /**
@@ -7,7 +7,7 @@ package com.nia.wj.pojo;
  * @author: ganwei
  * @create: 2021-03-26 14:36
  **/
-public class RetObj {
+public class Result {
 
     /**
      * 响应码
@@ -18,25 +18,25 @@ public class RetObj {
 
     private Object obj;
 
-    public RetObj(int code) {
+    public Result(int code) {
         this.code = code;
     }
 
-    public RetObj(Integer code, String msg, Object obj) {
+    public Result(Integer code, String msg, Object obj) {
         this.code = code;
         this.msg = msg;
         this.obj = obj;
     }
-    public RetObj(Integer code, String msg) {
+    public Result(Integer code, String msg) {
         super();
         this.code = code;
         this.msg = msg;
     }
-    public RetObj(String msg) {
+    public Result(String msg) {
         super();
         this.msg = msg;
     }
-    public RetObj(Object obj) {
+    public Result(Object obj) {
         super();
         this.obj = obj;
     }
