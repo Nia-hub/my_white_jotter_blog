@@ -42,6 +42,7 @@ public class LoginController {
 
         String loginName = loginUser.getLoginName();
         Subject subject = SecurityUtils.getSubject();
+        //loginName便成了subject中的principal
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginName, loginUser.getPassword());
         usernamePasswordToken.setRememberMe(true);//记住cookie
 

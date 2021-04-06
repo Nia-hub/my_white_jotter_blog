@@ -47,7 +47,7 @@ public class MyWebConfigurer implements WebMvcConfigurer {
         //所有请求都允许跨域
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:9999")//允许访问的域
-                .allowedMethods("*")
+                .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);//cookie允许跨域使用
     }

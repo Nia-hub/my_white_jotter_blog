@@ -43,12 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
         }
 
-        boolean flag = this.verifyStateOfLoginBySessionId(request, response, handler);
-        if (flag){
-            return true;
-        }
-
-        return true;
+        return this.verifyStateOfLoginBySessionId(request, response, handler);
     }
 
     /**
@@ -83,10 +78,23 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         Subject subject = SecurityUtils.getSubject();
-        // 使用 shiro 验证
-        if (!subject.isAuthenticated()) {
+        // 使用 shiro 验证，Remembered和Authenticated 是互斥的
+        if (!subject.isAuthenticated() && !subject.isRemembered()) {
+            System.out.println(subject.isRemembered());//第一次登录刚被拦截输出false,之后都是true(不清缓存)
+            System.out.println(subject.isAuthenticated());//第一次登录刚被拦截输出false,之后都是true(不清缓存)
             return false;
         }
+        /**
+         * 登录刚被拦截输出false,因为此时的subject不是被记住的subject，是真人执行了登录得到的subject；
+         * 若关闭浏览器直接访问目标网页，则输出true,因为此时未登录网站，但由于有rememberme功能，所以此时浏览器记得我，但此时的subject
+         * 不是通过登录得到的，而是就之前记住的
+         */
+        System.out.println(subject.isRemembered());
+        /**
+         * 登录刚被拦截输出true,因为账号验证通过
+         * 若关闭浏览器直接访问目标网页，则输出false,应为此时的账号未通过登录验证
+         */
+        System.out.println(subject.isAuthenticated());
         return true;
     }
 }

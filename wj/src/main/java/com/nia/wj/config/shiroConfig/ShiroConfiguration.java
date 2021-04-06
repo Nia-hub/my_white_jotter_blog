@@ -30,6 +30,11 @@ public class ShiroConfiguration {
         return new LifecycleBeanPostProcessor();
     }
 
+    /**
+     * 5
+     * @param securityManager
+     * @return
+     */
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
 
@@ -39,6 +44,10 @@ public class ShiroConfiguration {
         return shiroFilterFactoryBean;
     }
 
+    /**
+     * 1
+     * @return
+     */
     @Bean
     public SecurityManager securityManager() {
 
@@ -48,6 +57,10 @@ public class ShiroConfiguration {
         return securityManager;
     }
 
+    /**
+     * 2
+     * @return
+     */
     @Bean
     public WjRealm getWjRealm() {
 
@@ -58,6 +71,7 @@ public class ShiroConfiguration {
     }
 
     /**
+     * 3
      * WjRealm中获取了认证信息后会掉这个方法
      * @return
      */
@@ -71,6 +85,11 @@ public class ShiroConfiguration {
         return hashedCredentialsMatcher;
     }
 
+    /**
+     * 4
+     * @param securityManager
+     * @return
+     */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
 
