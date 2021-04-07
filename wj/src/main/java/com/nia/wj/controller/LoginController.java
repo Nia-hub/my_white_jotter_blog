@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
-import javax.servlet.http.HttpSession;
+
 import java.util.Date;
 
 /**
@@ -103,6 +103,7 @@ public class LoginController {
      * @return
      */
     @ResponseBody
+    @CrossOrigin(origins = "*",maxAge = 3600)
     @GetMapping("api/logout")
     public Result logout(){
 
@@ -117,6 +118,7 @@ public class LoginController {
      * @return
      */
     @ResponseBody
+    @CrossOrigin(origins = "*",maxAge = 3600)
     @GetMapping(value = "api/authentication")
     public String authentication(){
         return "身份认证成功";

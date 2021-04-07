@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class AdminUserRoleService {
     @Autowired
-    private AdminUserRoleDao adminUserRoleDAO;
+    private AdminUserRoleDao adminUserRoleDao;
 
     /**
      * 根据用户主键查询其用有的角色
@@ -28,13 +28,13 @@ public class AdminUserRoleService {
      * @return
      */
     public List<AdminUserRole> listAllByUid(int uid) {
-        return adminUserRoleDAO.findAllByUid(uid);
+        return adminUserRoleDao.findAllByUid(uid);
     }
 
 //    @Modifying
     @Transactional
     public void saveRoleChanges(int uid, List<AdminRole> roles) {
-        adminUserRoleDAO.deleteAllByUid(uid);
+        adminUserRoleDao.deleteAllByUid(uid);
         List<AdminUserRole> urs = new ArrayList<>();
         roles.forEach(r -> {
             AdminUserRole ur = new AdminUserRole();
@@ -42,6 +42,6 @@ public class AdminUserRoleService {
             ur.setRid(r.getId());
             urs.add(ur);
         });
-        adminUserRoleDAO.saveAll(urs);
+        adminUserRoleDao.saveAll(urs);
     }
 }

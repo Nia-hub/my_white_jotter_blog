@@ -1,6 +1,7 @@
 package com.nia.wj.config.shiroConfig;
 
 import com.nia.wj.pojo.User;
+import com.nia.wj.service.AdminPermissionService;
 import com.nia.wj.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -11,8 +12,9 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.elasticsearch.index.similarity.SimilarityProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 /**
  * @ClassName WjRealm
@@ -25,6 +27,8 @@ public class WjRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AdminPermissionService adminPermissionService;
 
     /**
      * 重写获取授权信息的方法
@@ -34,7 +38,14 @@ public class WjRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
+        //获取当前用户登录名
+        String loginName = principalCollection.getPrimaryPrincipal().toString();
+        // 获取当前用户的所有菜单权限（菜单url）
+        Set<String> permissions = adminPermissionService.listPermissionURLsByUser(loginName);
+
+        // 将权限放入授权信息中
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        simpleAuthorizationInfo.setStringPermissions(permissions);
         return simpleAuthorizationInfo;
     }
 

@@ -46,6 +46,7 @@ public class AdminMenuService {
         // 查询出这些角色对应的所有菜单项
         List<Integer> menuIds = adminRoleMenuService.findAllByRid(rids)
                 .stream().map(AdminRoleMenu::getMid).collect(Collectors.toList());
+        //去重，不同角色可能拥有菜单相同
         List<AdminMenu> menus = adminMenuDao.findAllById(menuIds).stream().distinct().collect(Collectors.toList());
 
         // 处理菜单项的结构
@@ -54,7 +55,7 @@ public class AdminMenuService {
     }
 
     /**
-     * Adjust the Structure of the menu.
+     * 调整菜单list
      *
      * @param menus Menu items list without structure
      */
@@ -64,9 +65,15 @@ public class AdminMenuService {
             m.setChildren(children);
         });
 
+        //从list中移除父节点外的子菜单
         menus.removeIf(m -> m.getParentId() != 0);
     }
 
+    /**
+     * 根据父节点主键查出所有的子菜单
+     * @param parentId
+     * @return
+     */
     public List<AdminMenu> getAllByParentId(int parentId) {
         return adminMenuDao.findAllByParentId(parentId);
     }
