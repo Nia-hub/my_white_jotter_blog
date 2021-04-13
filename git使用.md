@@ -72,27 +72,29 @@ git config --global user.email "1845067261@qq.com"
 
 
 
-#### 3.从仓库中拉取项目，提交代码
+#### 3.拉取项目，提交代码
 
 
 
-##### 3.1.找个放项目的文件然后在打开的git Bash Here中输入 git clone 项目地址
+##### 3.1 拉取代码
+
+* 1.找个放项目的文件然后在打开的git Bash Here中输入 git clone 项目地址
 
 ![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225134718964.png)
 
-##### 3.2.运行：git add  “想要提交的文件”
+* 2运行：git add  “想要提交的文件”
 
 ![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225142121411.png)
 
 ##### 
 
-##### 3.3.运行：git commit -m “提交项目的备注”
+* 3运行：git commit -m “提交项目的备注”
 
 ![]()![20181225142133829](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225142133829.png)
 
 
 
-##### 3.4.运行：git push origin master 后仓库就有提交的文件了
+* 4运行：git push origin master 后仓库就有提交的文件了
 
  本地仓库代码提交到github上（运行这一步要输入用户名和密码，用户名是github帐号，密码就是github的密码）
 
@@ -100,31 +102,51 @@ git config --global user.email "1845067261@qq.com"
 
 
 
-##### 3.5.**创建分支**
+##### 3.2 **创建分支**
 
-- 1提交到分支在合并分支到主干，运行：git branch dev 创建分支
+- ###### 1运行：git checkout -b office **创建分支office**,并且会自动**跳转到office分支**
 
 ![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225142824111.png)
 
-- 2运行：git checkout dev 进入创建的分支
-
-![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225142907473.png)
-
-- 3运行：git add .
+- 2运行：git add .
 
 ![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225144503117.png)
 
-- 4运行：git commit -m “提交代码说明”
+- 3运行：git commit -m “提交代码说明”
 
 ![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225144512705.png)
 
-- 5运行：git remote add origin url(demo仓库地址)，让本地仓库和远程仓库关联
+- 4运行：git remote add origin url(demo仓库地址)，让本地仓库和远程仓库关联
 
 ![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225144600300.png)
 
-- 6运行：git push origin dev 本地dev分支仓库提交到github上（运行这一步要输入用户名和密码，用户名是github帐号，密码就是github的密码）；
+- 5运行：刚创建的分支需执行：git push origin office本地office分支仓库提交到github上，之后的push只需执行git push就行（前提已处于office分支）（运行这一步要输入用户名和密码，用户名是github帐号，密码就是github的密码）；
 
 ![](F:\02_gitWorkspace\02-white-jotter-blog\my_white_jotter_blog\img\20181225144722929.png)
+
+* 6切换分支：例git checkout master
+
+
+
+* 7 git push offic 后发现和远程分支失去关联：fatal: The current branch offic has no upstream branch.
+
+  解决：git push --set-upstream origin offic 再执行gitpush offic
+
+
+
+##### 3.3 代码合并
+
+
+
+1 、先将自己的分支（例: master）更新，再切换到有更新的分支(例：offic)上拉取代码（pull），检查没错后
+
+2、切换到master，执行合并 git merge offic 就将offic更新的代码合并到了master中， 合并后就可以执行 add -- commit --push操作了（反过来将master合并到offic也一样）
+
+3、代码冲突： 当master在地10行有代码，且offic在地10行也有代码，此时执行合并就需要两个分支中写代码的人协调保留哪行代码。
+
+##### 3.4 版本回退（revert）
+
+执行**git log** 查看commit的版本，选中想要回退的版本号，执行**git reset --hard 版本号**完成
 
 
 
@@ -170,4 +192,3 @@ git merge origin/master
 原文链接：https://blog.csdn.net/gh254172840/article/details/106166208
 ```
 
-##### 5.阿诗丹顿多多多多多
