@@ -14,7 +14,7 @@
                 <!--to后接组件名-->
                 <router-link to="register"><el-button type="primary" style="width: 40%;background: #505458;border: none">注册</el-button></router-link>
             </el-form-item>
-        </el-form>
+        </el-form> 
     </body>
 </template>
 
