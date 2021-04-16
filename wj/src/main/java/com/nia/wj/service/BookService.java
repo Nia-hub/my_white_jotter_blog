@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @ClassName BookService
- * @Description TODO
+ * @Description 书籍服务类
  * @Author ganwei
  * @Date 2021/4/4 23:46
  * @VERSION 1.0

@@ -1,6 +1,5 @@
 package com.nia.wj.config;
 
-import com.nia.wj.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -18,25 +17,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MyWebConfigurer implements WebMvcConfigurer {
 
     /**
-     * 获取自定义拦截器
+     * 获取自定义拦截器（使用shiro，所以不用这个）
      * @return
      */
-    @Bean
-    public LoginInterceptor getLoginInterceptor(){
-        return new LoginInterceptor();
-    }
-
-    /**
-     * 设置拦截哪些请求，不拦截哪些请求
-     * @param registry
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getLoginInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/api/login")
-                .excludePathPatterns("/api/logout")
-                .excludePathPatterns("/index.html");
-    }
+//    @Bean
+//    public LoginInterceptor getLoginInterceptor(){
+//        return new LoginInterceptor();
+//    }
+//
+//    /**
+//     * 设置拦截哪些请求，不拦截哪些请求
+//     * @param registry
+//     */
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(getLoginInterceptor()).addPathPatterns("/**")
+//                .excludePathPatterns("/api/login")
+//                .excludePathPatterns("/api/logout")
+//                .excludePathPatterns("/index.html");
+//    }
 
     /**
      * 跨域访问设置
@@ -47,7 +46,7 @@ public class MyWebConfigurer implements WebMvcConfigurer {
         //所有请求都允许跨域
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:9999")//允许访问的域
-                .allowedMethods("*")
+                .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);//cookie允许跨域使用
     }
